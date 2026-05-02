@@ -1,17 +1,10 @@
 name: Threads Auto Post
 
 on:
-  schedule:
-    - cron: '0 23 * * *'
-    - cron: '0 3 * * *'
-    - cron: '0 7 * * *'
-    - cron: '0 9 * * *'
-    - cron: '0 11 * * *'
-    - cron: '0 13 * * *'
   workflow_dispatch:
     inputs:
-      hour:
-        description: 'テスト投稿の時間帯（例：8, 12, 16, 18, 20, 22）'
+      test:
+        description: 'テスト投稿（true を入力）'
         required: false
         default: ''
 
@@ -32,9 +25,4 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          if [ -n "${{ github.event.inputs.hour }}" ]; then
-            python main.py post ${{ github.event.inputs.hour }}
-          else
-            python main.py post
-          fi
+        run: python main.py post
